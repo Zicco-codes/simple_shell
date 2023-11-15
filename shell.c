@@ -1,5 +1,4 @@
 #include "zs.h"
-
 /**
 * main - main function
 * @ac: argument count
@@ -28,6 +27,9 @@ int main(int ac, char **av, char *envp[])
 
 	while (1)
 	{
+		freebuff(cmd);
+		freebuff(path2);
+		free(cmdpath);
 		zs_prompt();
 		size = getline(&input, &buffer_size, stdin);
 
@@ -58,23 +60,19 @@ int main(int ac, char **av, char *envp[])
 
 		if (!cmdpath)
 		{
-			freebuff(cmd);
+			free(cmd);
 			perror(av[0]);
 		}
 		else
 		{
 			execute_cmd(cmdpath, cmd);
-			free(cmdpath);
 		}
-		freebuff(cmd);
-		cmd = NULL;
-		freebuff(path2);
-		}
+	}
 
-		if (size < 0 && flags.interactive)
-		{
-			write(2, "\n", 1);
-		}
+	if (size < 0 && flags.interactive)
+	{
+		write(2, "\n", 1);
+	}
 
 	free(input);
 	input = NULL;
