@@ -6,6 +6,7 @@
 * Return: tokens
 */
 
+char **zs_strtok(char *input);
 char **zs_strtok(char *input)
 {
 	char *buff;
